@@ -19,4 +19,3 @@ public class SuspiciousSubstance extends Item {
 	}
 
 }
-//a testjgajoidjgoijiojweajiojlif
