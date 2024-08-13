@@ -26,6 +26,8 @@ public class ModItems{
 				// Ignore the food component for now, we'll cover it later in the food section.
 				new SuspiciousSubstance(new Item.Settings()),"suspicious_substance"
 		);
+		public static final Item GoldenBow = register(new GoldenBow(new Item.Settings()), "goldenbow")
+		
 		public static void Initialize() {
 			ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS)
 				.register((itemGroup) -> itemGroup.add(ModItems.SUSPICIOUS_SUBSTANCE));
