@@ -1,38 +1,31 @@
 package com.example;
 
+import java.util.function.Function;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
-public class ModItems{
-	
+public class ModItems {
 
+	public static Item register(String path, Function<Item.Settings, Item> factory, Item.Settings settings) {
+		final RegistryKey<Item> registryKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of("example", path));
+		return Items.register(registryKey, factory, settings);
+	}
 
-		public static Item register(Item item, String id) {
-			// Create the identifier for the item.
-			Identifier itemID = Identifier.of(ExampleMod.MOD_ID, id);
+	public static final Item SUSPICIOUS_SUBSTANCE = register("suspicious_substance", Item::new, new Item.Settings());
+	public static final Item GOLDEN_BOW = register("golden_bow", Item::new, new Item.Settings());
 
-			// Register the item.
-			Item registeredItem = Registry.register(Registries.ITEM, itemID, item);
-			// Return the registered item!
-			return registeredItem;
-		}
-		
-		public static final Item SUSPICIOUS_SUBSTANCE = register(
-				// Ignore the food component for now, we'll cover it later in the food section.
-				new SuspiciousSubstance(new Item.Settings()),"suspicious_substance"
-		);
-		public static final Item GoldenBow = register(new GoldenBow(new Item.Settings()), "goldenbow");
-		
-		public static void Initialize() {
-			ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS)
+	public static void Initialize() {
+
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS)
 				.register((itemGroup) -> itemGroup.add(ModItems.SUSPICIOUS_SUBSTANCE));
-		}
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
+				.register((itemGroup) -> itemGroup.add(ModItems.GOLDEN_BOW));
+	}
 
-		
-		
 }
